@@ -1,4 +1,9 @@
-## Rails 5.0.7.2 (March 11, 2019) ##
+## Rails 5.0.7.2.brilliant (March 11, 2019) ##
+*   Gemfile for new apps: upgrade redis-rb from ~> 3.0 to 4.0.
+
+    *Jeremy Daer*
+
+## Rails 5.1.4 (September 07, 2017) ##
 
 *   No changes.
 
