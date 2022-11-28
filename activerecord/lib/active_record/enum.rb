@@ -29,13 +29,14 @@ module ActiveRecord
   # as well. With the above example:
   #
   #   Conversation.active
+  #   Conversation.not_active
   #   Conversation.archived
+  #   Conversation.not_archived
   #
   # Of course, you can also query them directly if the scopes don't fit your
   # needs:
   #
   #   Conversation.where(status: [:active, :archived])
-  #   Conversation.where.not(status: :active)
   #
   # You can set the default value from the database declaration, like:
   #
@@ -194,6 +195,11 @@ module ActiveRecord
             # scope :active, -> { where status: 0 }
             klass.send(:detect_enum_conflict!, name, value_method_name, true)
             klass.scope value_method_name, -> { where(attr => value) }
+            
+            # Rails 6 negative scope PR: https://github.com/rails/rails/pull/35381
+            # scope :not_active, -> { where.not(status: 0) }
+            klass.send(:detect_enum_conflict!, name, "not_#{value_method_name}", true)
+            klass.scope "not_#{value_method_name}", -> { where.not(attr => value) }
           end
         end
         defined_enums[name.to_s] = enum_values
