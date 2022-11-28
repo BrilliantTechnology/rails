@@ -29,13 +29,14 @@ module ActiveRecord
   # as well. With the above example:
   #
   #   Conversation.active
+  #   Conversation.not_active
   #   Conversation.archived
+  #   Conversation.not_archived
   #
   # Of course, you can also query them directly if the scopes don't fit your
   # needs:
   #
   #   Conversation.where(status: [:active, :archived])
-  #   Conversation.where.not(status: :active)
   #
   # You can set the default value from the database declaration, like:
   #
