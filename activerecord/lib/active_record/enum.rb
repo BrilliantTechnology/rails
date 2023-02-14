@@ -199,6 +199,11 @@ module ActiveRecord
             # scope :active, -> { where(status: 0) }
             klass.send(:detect_enum_conflict!, name, value_method_name, true)
             klass.scope value_method_name, -> { where(attr => value) }
+
+            # Rails 6 negative scope PR: https://github.com/rails/rails/pull/35381
+            # scope :not_active, -> { where.not(status: 0) }
+            klass.send(:detect_enum_conflict!, name, "not_#{value_method_name}", true)
+            klass.scope "not_#{value_method_name}", -> { where.not(attr => value) }
           end
         end
         enum_values.freeze
